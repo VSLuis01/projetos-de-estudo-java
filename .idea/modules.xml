@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FirstSpringProject.iml" filepath="$PROJECT_DIR$/.idea/modules/FirstSpringProject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/IdeaProjects.iml" filepath="$PROJECT_DIR$/.idea/IdeaProjects.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JPA/JPA.iml" filepath="$PROJECT_DIR$/JPA/JPA.iml" />
+      <module fileurl="file://$PROJECT_DIR$/arquitetura-spring/arquitetura-spring.iml" filepath="$PROJECT_DIR$/arquitetura-spring/arquitetura-spring.iml" />
+      <module fileurl="file://$PROJECT_DIR$/arquiteturapring/arquiteturapring.iml" filepath="$PROJECT_DIR$/arquiteturapring/arquiteturapring.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dslist/dslist.iml" filepath="$PROJECT_DIR$/dslist/dslist.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libraryapi/libraryapi.iml" filepath="$PROJECT_DIR$/libraryapi/libraryapi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/produtosapi/produtosapi.iml" filepath="$PROJECT_DIR$/produtosapi/produtosapi.iml" />
+    </modules>
+  </component>
+</project>

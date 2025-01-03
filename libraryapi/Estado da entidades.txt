@@ -1,0 +1,9 @@
+TRANSIENT: É uma entidade que ainda não foi salva no banco, ou não foi feita nenhuma operação com ela.
+
+MANAGED: Na hora que salvar ou persistir, a entidade vira Managed, ou seja, a entidade está sendo gerenciada pelo Entity Manager
+
+REMOVED: A entidade foi marcada para ser removida no banco de dados. Com métodos de remove/delete
+
+DETACHED: Desassociar uma entidade do Entity Manager, ou seja, todas operações que foram feito durante uma transação. Não
+serão aplicada a essa entidade que foi desassociada. Caso chamar o 'merge' vai voltar para o Entity Manager
+

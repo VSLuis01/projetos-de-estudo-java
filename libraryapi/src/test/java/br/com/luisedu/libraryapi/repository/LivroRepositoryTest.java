@@ -28,15 +28,15 @@ class LivroRepositoryTest {
         Livro livro = new Livro();
         livro.setIsbn("13123-21313");
         livro.setPreco(BigDecimal.valueOf(100));
-        livro.setGenero(GeneroLivro.FICCAO);
-        livro.setTitulo("Livro 2");
+        livro.setGenero(GeneroLivro.CIENCIA);
+        livro.setTitulo("CIENENCIAS");
         livro.setDataPublicacao(LocalDate.of(2020, 1, 1));
 
         Autor autor = autorRepository
                 .findById(UUID.fromString("2056816c-a5e2-432d-b1b5-9f6e7e3de3e4"))
                 .orElse(null);
 
-        livro.setAutor(autor);
+//        livro.setAutor(autor);
 
         livroRepository.save(livro);
     }
@@ -141,5 +141,27 @@ class LivroRepositoryTest {
     void listarGenerosAutoresBrasileiros() {
         List<String> strings = livroRepository.listarGenerosAutoresBrasileiros();
         strings.forEach(System.out::println);
+    }
+
+    @Test
+    void listarPorGeneroQueryParamTest() {
+        List<Livro> livros = livroRepository.findByGenero(GeneroLivro.MISTERIO, "dataPublicacao");
+        livros.forEach(System.out::println);
+    }
+
+    @Test
+    void listarPorGeneroPositionalParametersTest() {
+        List<Livro> livros = livroRepository.findByGeneroPositionalParameters(GeneroLivro.MISTERIO, "dataPublicacao");
+        livros.forEach(System.out::println);
+    }
+
+    @Test
+    void deletePorGeneroTest() {
+        this.livroRepository.deleteByGenero(GeneroLivro.CIENCIA);
+    }
+
+    @Test
+    void atualizarDataPublicacao() {
+        this.livroRepository.updateDatePublicacao(LocalDate.of(2002, 10, 9));
     }
 }

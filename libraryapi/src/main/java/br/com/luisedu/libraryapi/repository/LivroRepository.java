@@ -4,9 +4,13 @@ import br.com.luisedu.libraryapi.model.Autor;
 import br.com.luisedu.libraryapi.model.GeneroLivro;
 import br.com.luisedu.libraryapi.model.Livro;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,14 +41,28 @@ public interface LivroRepository extends JpaRepository<Livro, UUID> {
     List<Autor> listarAutoresDosLivros();
 
     @Query("""
-        select l.genero
-        from Livro l
-        join l.autor a
-        where a.nacionalidade = 'Brasileiro'
-        order by l.genero
-    """)
+                select l.genero
+                from Livro l
+                join l.autor a
+                where a.nacionalidade = 'Brasileiro'
+                order by l.genero
+            """)
     List<String> listarGenerosAutoresBrasileiros();
 
+    // named parameters -> parametros nomeados
+    @Query("select l from Livro l where l.genero = :genero order by :paramOrdenacao")
+    List<Livro> findByGenero(@Param("genero") GeneroLivro genero, @Param("paramOrdenacao") String paramOrdenacao);
 
-    List<Livro> findByGenero(GeneroLivro genero);
+    @Query("select l from Livro l where l.genero = ?1 order by ?2")
+    List<Livro> findByGeneroPositionalParameters(GeneroLivro genero, String paramOrdenacao);
+
+    @Transactional
+    @Modifying
+    @Query("delete from Livro where genero = ?1")
+    void deleteByGenero(GeneroLivro genero);
+
+    @Transactional
+    @Modifying
+    @Query("update Livro set dataPublicacao = ?1")
+    void updateDatePublicacao(LocalDate novaDataPublicacao);
 }
