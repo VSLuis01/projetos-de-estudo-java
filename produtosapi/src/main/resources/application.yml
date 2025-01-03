@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: Produtos API
+  profiles:
+    active: ${APP_PROFILE:test}
+  jpa:
+    open-in-view: false
