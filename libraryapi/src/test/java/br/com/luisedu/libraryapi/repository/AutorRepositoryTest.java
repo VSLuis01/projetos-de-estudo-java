@@ -116,7 +116,7 @@ class AutorRepositoryTest {
     @Test
     //@Transactional
     void listarLivrosAutorTest() {
-        UUID autorId = UUID.fromString("73e90da2-4a69-4b18-ac67-3b57d9647007");
+        UUID autorId = UUID.fromString("c1ac8e10-763b-4209-bf4f-97b46e96b815");
         Autor autor = this.autorRepository.findById(autorId).orElse(null);
 
         // bucas os livros do autor
