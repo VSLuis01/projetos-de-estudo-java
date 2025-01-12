@@ -50,7 +50,4 @@ public class Autor {
     @Column(name = "id_usuario")
     private UUID idUsuario;
 
-    public AutorDTO toAutorDTO() {
-        return new AutorDTO(this.id, this.nome, this.dataNascimento, this.nacionalidade);
-    }
 }
