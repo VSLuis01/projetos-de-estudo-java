@@ -38,7 +38,7 @@ public class AutorController implements GenericController {
     @PutMapping("{id}")
     public ResponseEntity<Void> atualizar(@PathVariable("id") String id, @RequestBody @Valid AutorDTO autorDTO) {
         var idAutor = UUID.fromString(id);
-        Optional<Autor> autorOptional = autorService.buscarPorId(idAutor);
+        Optional<Autor> autorOptional = autorService.obterPorId(idAutor);
 
         if (autorOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -60,7 +60,7 @@ public class AutorController implements GenericController {
         var idAutor = UUID.fromString(id);
 
         return autorService
-                .buscarPorId(idAutor)
+                .obterPorId(idAutor)
                 .map(autor -> {
                     AutorDTO dto = mapper.toDto(autor);
                     return ResponseEntity.ok(dto);
@@ -70,7 +70,7 @@ public class AutorController implements GenericController {
     @DeleteMapping("{id}")
     public ResponseEntity<Void> remover(@PathVariable("id") String id) {
         var idAutor = UUID.fromString(id);
-        Optional<Autor> autorOptional = autorService.buscarPorId(idAutor);
+        Optional<Autor> autorOptional = autorService.obterPorId(idAutor);
 
         if (autorOptional.isEmpty()) {
             return ResponseEntity.notFound().build();

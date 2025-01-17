@@ -1,16 +1,16 @@
 package br.com.luisedu.libraryapi.controller;
 
 import br.com.luisedu.libraryapi.controller.dto.CadastroLivroDTO;
+import br.com.luisedu.libraryapi.controller.dto.ResultadoPesquisaLivroDTO;
 import br.com.luisedu.libraryapi.controller.mappers.LivroMapper;
 import br.com.luisedu.libraryapi.model.Livro;
 import br.com.luisedu.libraryapi.service.LivroService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/livros")
@@ -29,5 +29,26 @@ public class LivroController implements GenericController {
         var url = gerarHeaderLocation(livro.getId());
 
         return ResponseEntity.created(url).build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ResultadoPesquisaLivroDTO> obterDetalhes(@PathVariable("id") String id) {
+        return livroService
+                .obterPorId(UUID.fromString(id))
+                .map(livro -> {
+                    var dto = mapper.toDTO(livro);
+
+                    return ResponseEntity.ok(dto);
+                }).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Object> deletar(@PathVariable("id") String id) {
+        return livroService
+                .obterPorId(UUID.fromString(id))
+                .map(livro -> {
+                    livroService.deletar(livro);
+                    return ResponseEntity.noContent().build();
+                }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

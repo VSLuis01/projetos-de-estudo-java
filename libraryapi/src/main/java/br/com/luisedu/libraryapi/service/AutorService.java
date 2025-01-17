@@ -37,7 +37,7 @@ public class AutorService {
         autorRepository.save(autor);
     }
 
-    public Optional<Autor> buscarPorId(UUID id) {
+    public Optional<Autor> obterPorId(UUID id) {
         return autorRepository.findById(id);
     }
 
