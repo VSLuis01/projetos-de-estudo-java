@@ -3,6 +3,7 @@ package br.com.luisedu.libraryapi.service;
 import br.com.luisedu.libraryapi.model.GeneroLivro;
 import br.com.luisedu.libraryapi.model.Livro;
 import br.com.luisedu.libraryapi.repository.LivroRepository;
+import br.com.luisedu.libraryapi.validator.LivroValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -18,8 +19,14 @@ import static br.com.luisedu.libraryapi.repository.specs.LivroSpecs.*;
 public class LivroService {
     private final LivroRepository livroRepository;
 
-    public Livro salver(Livro livro) {
-        return livroRepository.save(livro);
+    private final LivroValidator validator;
+
+    public void salvar(Livro livro) {
+        livro.setIsbn(livro.getIsbn().replaceAll("\\D", ""));
+
+        validator.validar(livro);
+
+        livroRepository.save(livro);
     }
 
     public Optional<Livro> obterPorId(UUID id) {
@@ -72,9 +79,13 @@ public class LivroService {
     }
 
     public void atualizar(Livro livro) {
+        livro.setIsbn(livro.getIsbn().replaceAll("\\D", ""));
+
         if (livro.getId() == null) {
             throw new IllegalArgumentException("Para atualizar é necessário que o livro ja esteja salvo na base");
         }
+
+        validator.validar(livro);
 
         livroRepository.save(livro);
     }
