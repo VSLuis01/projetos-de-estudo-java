@@ -3,6 +3,7 @@ package br.com.luisedu.libraryapi.service;
 import br.com.luisedu.libraryapi.model.GeneroLivro;
 import br.com.luisedu.libraryapi.model.Livro;
 import br.com.luisedu.libraryapi.repository.LivroRepository;
+import br.com.luisedu.libraryapi.security.SecurityService;
 import br.com.luisedu.libraryapi.validator.LivroValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -11,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -21,6 +21,7 @@ import static br.com.luisedu.libraryapi.repository.specs.LivroSpecs.*;
 @RequiredArgsConstructor
 public class LivroService {
     private final LivroRepository livroRepository;
+    private final SecurityService securityService;
 
     private final LivroValidator validator;
 
@@ -28,6 +29,8 @@ public class LivroService {
         livro.setIsbn(livro.getIsbn().replaceAll("\\D", ""));
 
         validator.validar(livro);
+
+        livro.setUsuario(securityService.obterUsuarioAutenticado());
 
         livroRepository.save(livro);
     }

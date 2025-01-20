@@ -4,11 +4,16 @@ package br.com.luisedu.libraryapi.controller;
 import br.com.luisedu.libraryapi.controller.dto.AutorDTO;
 import br.com.luisedu.libraryapi.controller.mappers.AutorMapper;
 import br.com.luisedu.libraryapi.model.Autor;
+import br.com.luisedu.libraryapi.model.Usuario;
+import br.com.luisedu.libraryapi.security.SecurityService;
 import br.com.luisedu.libraryapi.service.AutorService;
+import br.com.luisedu.libraryapi.service.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -28,8 +33,15 @@ public class AutorController implements GenericController {
     @PostMapping
     //@RequestMapping(method = RequestMethod.POST)
     @PreAuthorize("hasRole('GERENTE')")
-    public ResponseEntity<Void> salvar(@RequestBody @Valid AutorDTO dto) {
+    public ResponseEntity<Void> salvar(@RequestBody @Valid AutorDTO dto/*, Authentication auth*/) {
+        /* POSSÍVEL FORMA. INJETANDO NO MÉTODO
+        System.out.println(auth);
+
+        UserDetails usuarioAutenticado = (UserDetails) auth.getPrincipal();
+        Usuario usuario = usuarioService.obterPorLogin(usuarioAutenticado.getUsername());*/
+
         var autor = mapper.toEntity(dto);
+//        autor.setIdUsuario(usuario.getId());
         autorService.salvar(autor);
 
         URI location = gerarHeaderLocation(autor.getId());

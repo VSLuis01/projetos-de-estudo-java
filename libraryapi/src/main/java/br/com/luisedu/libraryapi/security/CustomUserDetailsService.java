@@ -3,7 +3,6 @@ package br.com.luisedu.libraryapi.security;
 import br.com.luisedu.libraryapi.model.Usuario;
 import br.com.luisedu.libraryapi.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
