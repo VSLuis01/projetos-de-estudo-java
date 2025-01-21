@@ -1,6 +1,7 @@
 package br.com.luisedu.libraryapi.config;
 
 import br.com.luisedu.libraryapi.security.CustomUserDetailsService;
+import br.com.luisedu.libraryapi.security.LoginSocialSuccessHandler;
 import br.com.luisedu.libraryapi.service.UsuarioService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +23,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfiguration {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(LoginSocialSuccessHandler successHandler, HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(Customizer.withDefaults())
@@ -34,7 +35,9 @@ public class SecurityConfiguration {
 
                     authorize.anyRequest().authenticated();
                 })
-                .oauth2Login(Customizer.withDefaults())
+                .oauth2Login(oauth2 -> {
+                    oauth2.successHandler(successHandler);
+                })
                 .build();
     }
 
